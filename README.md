@@ -9,7 +9,9 @@ Various tools and improvements for Flink
 'json-schema' format has been created in order to support Schema Registry Json messages.
 </br>
 This format is based on the [Apicurio Json SerDe](https://www.apicur.io/registry/docs/apicurio-registry/2.5.x/getting-started/assembly-configuring-kafka-client-serdes.html#registry-serdes-types-json_registry)
+</br>
 All the Apicurio configs can be used with this format.
+</br>
 Connector `kafka` will supply the default `json-schema.apicurio.registry.artifact.artifact-id` equals to `topic.name-value`, but it can be changed in the DDL.
 
 This format has the same configuration as [Json Format](https://nightlies.apache.org/flink/flink-docs-release-1.20/docs/connectors/table/formats/json/#format-options) with addition of all the Apicurio configs and the following ones:
@@ -36,7 +38,9 @@ Schema Registry URL should be configured via `json-schema.apicurio.registry.url`
 'avro-schema' format has been created in order to support Schema Registry Avro messages.
 </br>
 This format is based on the [Apicurio Avro SerDe](https://www.apicur.io/registry/docs/apicurio-registry/2.5.x/getting-started/assembly-configuring-kafka-client-serdes.html#registry-serdes-types-avro_registry)
+</br>
 All the Apicurio configs can be used with this format.
+</br>
 Connector `kafka` will supply the default `avro-schema.apicurio.registry.artifact.artifact-id` equals to `topic.name-value`, but it can be changed in the DDL.
 
 This format has all the Apicurio configs and the following ones:
