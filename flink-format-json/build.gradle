@@ -1,0 +1,83 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+    id "jacoco"
+    id "org.sonarqube" version "4.0.0.2929"
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "flink-format-json"
+        property "sonar.qualitygate.wait", true
+        property "sonar.language", "java"
+        property "sonar.sources", "src/main/java"
+        property "sonar.tests", "src/test/java"
+        property 'sonar.core.codeCoveragePlugin', 'jacoco'
+        property 'sonar.coverage.jacoco.xmlReportPaths', "${buildDir}/reports/jacoco/jacocoTestReport.xml"
+    }
+}
+
+jacocoTestReport{
+    reports {
+        xml.required = true
+        xml.outputLocation = layout.buildDirectory.file('reports/jacoco/jacocoTestReport.xml')
+        html.required = false
+    }
+}
+
+ext {
+}
+
+group 'com.exness.sdp'
+version System.getenv("CI_COMMIT_TAG") ?: "0.0.1-SNAPSHOT"
+
+
+dependencies {
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation "org.projectlombok:lombok:${lombokVersion}"
+
+    api "org.apache.flink:flink-connector-files:${flinkVersion}"
+    api "org.apache.flink:flink-json:${flinkVersion}"
+    api 'com.auth0:java-jwt:3.11.0'
+    api 'com.auth0:jwks-rsa:0.22.1'
+    api 'io.jsonwebtoken:jjwt-api:0.12.6'
+    api "io.apicurio:apicurio-registry-serdes-jsonschema-serde:${apicurioVersion}"
+
+    implementation project(":common")
+
+
+    compileOnly "org.apache.flink:flink-table-runtime:${flinkVersion}"
+    compileOnly "org.apache.flink:flink-core:${flinkVersion}"
+
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    testImplementation "org.apache.flink:flink-test-utils:${flinkVersion}"
+    testImplementation "org.apache.flink:flink-core:${flinkVersion}"
+    testImplementation "org.apache.flink:flink-table-runtime:${flinkVersion}"
+    testImplementation "org.apache.flink:flink-table-common:${flinkVersion}:tests"
+    testImplementation 'org.testcontainers:junit-jupiter:1.17.5'
+}
+
+test {
+    useJUnitPlatform()
+    jvmArgs("--add-opens=java.base/java.util=ALL-UNNAMED",
+            "--add-exports=java.base/java.util=ALL-UNNAMED",
+            "--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED",
+            "--add-opens=java.base/java.lang=ALL-UNNAMED")
+    finalizedBy(jacocoTestReport)
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) { publication ->
+            groupId = group
+            artifactId = project.name
+            version = version
+
+            from components.java
+        }
+    }
+}

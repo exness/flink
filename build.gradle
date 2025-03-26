@@ -1,0 +1,64 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'checkstyle'
+}
+
+ext {
+    javaVersion = '17'
+    flinkVersion = '1.20.0'
+    flinkKafkaVersion = '3.3.0-1.20'
+    scalaBinaryVersion = '2.12'
+    slf4jVersion = '2.0.3'
+    log4jVersion = '2.17.1'
+    lombokVersion = '1.18.34'
+    assertjVersion = '3.23.1'
+    junitJupiterVersion = '5.10.1'
+    postgresJdbcVersion = '42.7.2'
+    verticaJdbcVersion = '12.0.4-0'
+    clickhouseJdbcVersion = '0.6.5'
+    calciteVersion = '1.37.0'
+    apicurioVersion = '2.5.8.Final'
+}
+
+allprojects {
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    java {
+        withSourcesJar()
+    }
+
+    repositories {
+        maven {
+            url "https://packages.confluent.io/maven"
+            allowInsecureProtocol true
+        }
+        maven {
+            url 'https://jitpack.io'
+        }
+        mavenCentral()
+    }
+
+    checkstyle {
+        configFile = rootProject.file('checkstyle/checkstyle.xml')
+        toolVersion = '9.1'
+        ignoreFailures = false
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) { publication ->
+            groupId = group
+            artifactId = project.name
+            version = version
+
+            from components.java
+        }
+    }
+}

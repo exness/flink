@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "test",
+  "properties": {
+    "created_at": {
+      "type": "integer"
+    },
+    "producer": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "body": {
+      "type": "object",
+      "properties": {
+        "iss": {
+          "type": "string"
+        },
+        "1.0.0": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "is_repetitive": {
+                  "type": "boolean"
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "commission_amount": {
+                      "type": "integer"
+                    },
+                    "number_of_new_registrations": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "sample_array": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  }
+                },
+                "user_id": {
+                  "type": "string"
+                },
+                "displayed_at": {
+                  "type": "string"
+                },
+                "recipients": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "is_unique": {
+                  "type": "boolean"
+                },
+                "template_id": {
+                  "type": "string"
+                },
+                "sample_map": {
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      },
+                      "key": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "type": "object"
+                },
+                "expired_at": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                }
+              }
+            },
+            "meta": {
+              "type": "object",
+              "properties": {
+                "trace_id": {
+                  "type": "string"
+                },
+                "notification_id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "test",
+  "properties": {
+    "created_at": {
+      "type": "integer"
+    },
+    "producer": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    }
+  }
+}

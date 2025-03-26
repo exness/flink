@@ -1,0 +1,1 @@
+{"type":"record","name":"schema","namespace":"namespace","fields":[{"name":"id","type":["null","string"]},{"name":"created_at","type":["null","long"]},{"name":"producer","type":["null","string"]}]}

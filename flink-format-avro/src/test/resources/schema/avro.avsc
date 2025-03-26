@@ -1,0 +1,107 @@
+{
+  "type": "record",
+  "name": "InstrumentUpdatedSotEvent",
+  "namespace": "trading.toms.sot.instrument",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string",
+      "doc": "Identifies the event. Producers MUST ensure that source + id is unique for each distinct event. If a duplicate event is re-sent (e.g. due to a network error), it MAY have the same id. Consumers MAY assume that Events with identical sources and id are duplicates."
+    },
+    {
+      "name": "time",
+      "type": "string",
+      "doc": "Timestamp in RFC3399 format."
+    },
+    {
+      "name": "seq_num",
+      "type": "int",
+      "doc": "Monotonically increasing number. Should be continuous without interruptions: 1,2,3,..."
+    },
+    {
+      "name": "source",
+      "type": "string",
+      "doc": "Identifies the context in which an event happened."
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "doc": "Describes the event related to the originating occurrence."
+    },
+    {
+      "name": "specversion",
+      "type": "string",
+      "doc": "Identifies the CloudEvent specification that this event complies with."
+    },
+    {
+      "name": "data",
+      "type": {
+        "type": "record",
+        "name": "InstrumentUpdatedSotEventPayloadData",
+        "fields": [
+          {
+            "name": "action_type",
+            "type": {
+              "type": "enum",
+              "name": "ActionType",
+              "symbols": [
+                "ADD",
+                "UPDATE",
+                "DELETE"
+              ]
+            }
+          },
+          {
+            "name": "action_time",
+            "type": "string",
+            "doc": "Date & Time of the action."
+          },
+          {
+            "name": "instrument",
+            "type": {
+              "type": "record",
+              "name": "Instrument",
+              "fields": [
+                {
+                  "name": "code",
+                  "type": "string",
+                  "doc": "Instrument (symbol) name without suffix. Example: EURUSD"
+                },
+                {
+                  "name": "description",
+                  "type": "string",
+                  "doc": "Description of the instrument. Example: EUR vs USD"
+                },
+                {
+                  "name": "category",
+                  "type": "string",
+                  "doc": "Instrument group. Example: Majors"
+                },
+                {
+                  "name": "base_currency",
+                  "type": "string",
+                  "doc": "Base currency of the instrument. The first currency in a currency pair. Example: EUR"
+                },
+                {
+                  "name": "quote_currency",
+                  "type": "string",
+                  "doc": "The profit currency for the instrument. The second currency in a currency pair. Example: USD"
+                },
+                {
+                  "name": "price_precision",
+                  "type": "int",
+                  "doc": "The number of decimal places in the price of an instrument. Example: 5"
+                },
+                {
+                  "name": "contract_size",
+                  "type": "long",
+                  "doc": "Contract size is a fixed value, which denotes the amount of base currency in 1 lot. Example: 100000"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
