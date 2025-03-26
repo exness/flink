@@ -2,8 +2,6 @@
 
 Various tools and improvements for Flink
 
-[[_TOC_]]
-
 ## File formats
 
 ### json-schema (Json With Schema Registry)
