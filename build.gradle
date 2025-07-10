@@ -25,6 +25,10 @@ ext {
 allprojects {
     group = 'com.exness'
     version = project.hasProperty('projectVersion') ? project.property('projectVersion') : '0.1.0-SNAPSHOT'
+    
+    println "Setting project version to: ${version}"
+    println "projectVersion property: ${project.hasProperty('projectVersion') ? project.property('projectVersion') : 'NOT SET'}"
+    
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
 
@@ -84,6 +88,8 @@ jreleaser {
         description = 'Various tools and improvements for Flink'
         website = 'https://github.com/exness/flink'
         authors = ['Anonymous <noreply@exness.com>']
+        
+        println "JReleaser project version: ${version}"
     }
     
     release {
