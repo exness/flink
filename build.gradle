@@ -24,7 +24,7 @@ ext {
 
 allprojects {
     group = 'com.exness'
-    version = project.findProperty("projectVersion") ?: "local"
+    version = project.hasProperty('projectVersion') ? project.property('projectVersion') : '0.1.0-SNAPSHOT'
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
 
