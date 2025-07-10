@@ -84,7 +84,7 @@ jreleaser {
     
     project {
         name = 'flink'
-        version = project.version
+        version = '1.20.1'
         description = 'Various tools and improvements for Flink'
         website = 'https://github.com/exness/flink'
         authors = ['Anonymous <noreply@exness.com>']
