@@ -1,6 +1,5 @@
 project:
   name: flink
-  version: "{{RELEASE_VERSION}}"
   description: "Various tools and improvements for Flink"
   website: "https://github.com/exness/flink"
   authors:
@@ -10,6 +9,10 @@ project:
       - id: anonymous
         name: Anonymous
         email: noreply@exness.com
+
+release:
+  github:
+    enabled: false
 
 deploy:
   maven:
