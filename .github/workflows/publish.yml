@@ -31,7 +31,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Execute JReleaser
-        run: ./gradlew --no-daemon -i jreleaserFullRelease
+        run: ./gradlew --no-daemon -i jreleaserFullRelease -PprojectVersion=${{ github.ref_name }}
         env:
           RELEASE_VERSION: ${{ github.ref_name }}
           JRELEASER_PROJECT_VERSION: ${{ github.ref_name }}
