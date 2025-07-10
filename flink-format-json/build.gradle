@@ -29,8 +29,7 @@ jacocoTestReport{
 ext {
 }
 
-group 'com.exness.sdp'
-version System.getenv("CI_COMMIT_TAG") ?: "0.0.1-SNAPSHOT"
+version System.getenv("RELEASE_VERSION") ?: "0.0.1-SNAPSHOT"
 
 
 dependencies {

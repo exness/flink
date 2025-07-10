@@ -1,0 +1,24 @@
+project:
+  name: flink
+  version: "{{RELEASE_VERSION}}"
+  description: "Various tools and improvements for Flink"
+  website: "https://github.com/exness/flink"
+  authors:
+    - "Anonymous <noreply@exness.com>"
+  pom:
+    developers:
+      - id: anonymous
+        name: Anonymous
+        email: noreply@exness.com
+
+deploy:
+  maven:
+    central:
+      active: ALWAYS
+      url: https://central.sonatype.com/api/v1/publisher/upload
+      username: __TOKEN_USERNAME__
+      password: __TOKEN_PASSWORD__
+      sign: true
+      stagingRepositories: false
+      close: false
+      release: false 

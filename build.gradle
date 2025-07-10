@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'maven-publish'
     id 'checkstyle'
+    id 'org.jreleaser' version '1.11.0'
 }
 
 ext {
@@ -22,6 +23,7 @@ ext {
 }
 
 allprojects {
+    group = 'com.exness'
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
 
@@ -56,7 +58,7 @@ publishing {
         maven(MavenPublication) { publication ->
             groupId = group
             artifactId = project.name
-            version = version
+            version = System.getenv("RELEASE_VERSION") ?: "local"
 
             from components.java
         }
