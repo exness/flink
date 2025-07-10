@@ -30,14 +30,9 @@ jobs:
       - name: Release with gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Execute JReleaser
-        run: ./gradlew --no-daemon -i jreleaserFullRelease -PprojectVersion=${{ github.ref_name }}
+      - name: Execute publish to Maven Central
+        run: ./gradlew --no-daemon -i publishToMavenCentral -PsigningKey="${{ secrets.GPG_SIGNING_KEY }}" -PsigningPassword="${{ secrets.GPG_SIGNING_KEY_PASSWORD }}"
         env:
           RELEASE_VERSION: ${{ github.ref_name }}
-          JRELEASER_PROJECT_VERSION: ${{ github.ref_name }}
-          JRELEASER_GPG_SECRET_KEY: ${{ secrets.GPG_SIGNING_KEY }}
-          JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_SIGNING_KEY_PASSWORD }}
-          JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
-          JRELEASER_GITHUB_TOKEN: "EMPTY"
-          JRELEASER_DEPLOY_MAVEN_MAVENCENTRAL_SONATYPE_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
-          JRELEASER_DEPLOY_MAVEN_MAVENCENTRAL_SONATYPE_TOKEN: ${{ secrets.CENTRAL_PORTAL_TOKEN }}
+          MAVEN_CENTRAL_PORTAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
+          MAVEN_CENTRAL_PORTAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_TOKEN }}

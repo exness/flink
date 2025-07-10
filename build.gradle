@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'maven-publish'
     id 'checkstyle'
-    id 'org.jreleaser' version '1.19.0'
+    id 'org.danilopianini.publish-on-central' version '9.0.7'
 }
 
 ext {
@@ -24,11 +24,7 @@ ext {
 
 allprojects {
     group = 'com.exness'
-    version = project.hasProperty('projectVersion') ? project.property('projectVersion') : '0.1.0-SNAPSHOT'
-    
-    println "Setting project version to: ${version}"
-    println "projectVersion property: ${project.hasProperty('projectVersion') ? project.property('projectVersion') : 'NOT SET'}"
-    
+        
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
 
@@ -68,50 +64,20 @@ publishing {
             from components.java
         }
     }
-    
-    repositories {
-        maven {
-            url = layout.buildDirectory.dir('repo')
-        }
-    }
 }
 
-jreleaser {
-    signing {
-        active = 'ALWAYS'
-        armored = true
-    }
-    
-    project {
-        name = 'flink'
-        version = '1.20.1'
-        description = 'Various tools and improvements for Flink'
-        website = 'https://github.com/exness/flink'
-        authors = ['Anonymous <noreply@exness.com>']
-        
-        println "JReleaser project version: ${version}"
-    }
-    
-    release {
-        github {
-            skipRelease = true
-            skipTag = true
-        }
-    }
-    
-    deploy {
-        maven {
-            mavenCentral {
-                sonatype {
-                    active = 'ALWAYS'
-                    url = 'https://central.sonatype.com/api/v1/publisher'
-                    username = '__TOKEN_USERNAME__'
-                    password = '__TOKEN_PASSWORD__'
-                    stagingDirectories {
-                        directory('build/repo')
-                    }
-                }
-            }
-        }
-    }
+publishOnCentral {
+    repoOwner.set('exness')
+    projectDescription.set('Various tools and improvements for Flink')
+    projectLongName.set('Flink Tools')
+    licenseName.set('Apache License, Version 2.0')
+    licenseUrl.set('http://www.apache.org/licenses/LICENSE-2.0')
+    projectUrl.set('https://github.com/exness/flink')
+    scmConnection.set('scm:git:https://github.com/exness/flink')
+}
+
+signing {
+    def signingKey = project.findProperty('signingKey')
+    def signingPassword = project.findProperty('signingPassword')
+    useInMemoryPgpKeys(signingKey, signingPassword)
 }
