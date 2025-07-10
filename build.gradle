@@ -82,7 +82,7 @@ jreleaser {
     
     deploy {
         maven {
-            central {
+            mavenCentral {
                 active = 'ALWAYS'
                 url = 'https://central.sonatype.com/api/v1/publisher/upload'
                 username = '__TOKEN_USERNAME__'
