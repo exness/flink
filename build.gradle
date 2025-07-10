@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'maven-publish'
     id 'checkstyle'
-    id 'org.jreleaser' version '1.11.0'
+    id 'org.jreleaser' version '1.19.0'
 }
 
 ext {
@@ -61,6 +61,12 @@ publishing {
             version = System.getenv("RELEASE_VERSION") ?: "local"
 
             from components.java
+        }
+    }
+    
+    repositories {
+        maven {
+            url = layout.buildDirectory.dir('staging-deploy')
         }
     }
 }
