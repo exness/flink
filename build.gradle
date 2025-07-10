@@ -71,15 +71,6 @@ jreleaser {
         description = 'Various tools and improvements for Flink'
         website = 'https://github.com/exness/flink'
         authors = ['Anonymous <noreply@exness.com>']
-        pom {
-            developers {
-                developer {
-                    id = 'anonymous'
-                    name = 'Anonymous'
-                    email = 'noreply@exness.com'
-                }
-            }
-        }
     }
     
     release {
