@@ -29,8 +29,7 @@ jacocoTestReport{
 ext {
 }
 
-version System.getenv("RELEASE_VERSION") ?: "0.0.1-SNAPSHOT"
-
+version = project.findProperty("projectVersion") ?: "0.0.1-SNAPSHOT"
 
 dependencies {
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"

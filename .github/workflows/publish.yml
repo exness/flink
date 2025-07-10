@@ -28,8 +28,7 @@ jobs:
           passphrase: ${{ secrets.GPG_SIGNING_KEY_PASSWORD }}
 
       - name: Build and publish with JReleaser
-        run: ./gradlew jreleaserFullRelease
+        run: ./gradlew jreleaserFullRelease -PprojectVersion=${{ github.ref_name }}
         env:
-          RELEASE_VERSION: ${{ github.ref_name }}
           JRELEASER_MAVEN_CENTRAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
           JRELEASER_MAVEN_CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_TOKEN }} 

@@ -58,7 +58,7 @@ publishing {
         maven(MavenPublication) { publication ->
             groupId = group
             artifactId = project.name
-            version = System.getenv("RELEASE_VERSION") ?: "local"
+            version = project.findProperty("projectVersion") ?: "local"
 
             from components.java
         }

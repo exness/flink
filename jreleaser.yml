@@ -1,5 +1,6 @@
 project:
   name: flink
+  version: "{{projectVersion}}"
   description: "Various tools and improvements for Flink"
   website: "https://github.com/exness/flink"
   authors:
@@ -13,6 +14,7 @@ project:
 release:
   github:
     enabled: false
+    token: skip
 
 deploy:
   maven:

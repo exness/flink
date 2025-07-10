@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-version System.getenv("RELEASE_VERSION") ?: "0.0.1-SNAPSHOT"
+version = project.findProperty("projectVersion") ?: "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
