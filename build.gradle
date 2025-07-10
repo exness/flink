@@ -105,6 +105,8 @@ jreleaser {
                 sonatype {
                     active = 'ALWAYS'
                     url = 'https://central.sonatype.com/api/v1/publisher'
+                    username = '__TOKEN_USERNAME__'
+                    password = '__TOKEN_PASSWORD__'
                     stagingRepository('build/staging-deploy')
                 }
             }
