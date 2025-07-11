@@ -55,18 +55,6 @@ allprojects {
     }
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) { publication ->
-            groupId = group
-            artifactId = project.name
-            version = System.getenv("RELEASE_VERSION") ?: "local"
-
-            from components.java
-        }
-    }
-}
-
 publishOnCentral {
     repoOwner.set('exness')
     projectDescription.set('Various tools and improvements for Flink')
