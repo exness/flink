@@ -75,6 +75,22 @@ publishOnCentral {
     licenseUrl.set('http://www.apache.org/licenses/LICENSE-2.0')
     projectUrl.set('https://github.com/exness/flink')
     scmConnection.set('scm:git:https://github.com/exness/flink')
+    
+    publishing {
+        publications {
+            withType(MavenPublication) {
+                pom {
+                    developers {
+                        developer {
+                            name.set('Exness')
+                            email.set('support@exness.com')
+                            url.set('https://exness.com')
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 signing {

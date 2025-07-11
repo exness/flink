@@ -18,6 +18,7 @@ jobs:
             ./gradlew 
             publishAllPublicationsToProjectLocalRepository 
             zipMavenCentralPortalPublication 
+            validateMavenCentralPortalPublication 
             releaseMavenCentralPortalPublication
           should-deploy: true
           maven-central-username: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
