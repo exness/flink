@@ -25,7 +25,7 @@ jobs:
           passphrase: ${{ secrets.GPG_SIGNING_KEY_PASSWORD }}
 
       - name: Publish to Maven Central
-        run: ./gradlew publishToMavenCentral --no-configuration-cache
+        run: ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache
         env:
           RELEASE_VERSION: ${{ github.ref_name }}
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
