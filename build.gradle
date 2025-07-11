@@ -24,6 +24,7 @@ ext {
 
 allprojects {
     group = 'com.exness'
+    version = System.getenv("RELEASE_VERSION") ?: "0.0.1-SNAPSHOT"
         
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
