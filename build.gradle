@@ -75,6 +75,11 @@ publishOnCentral {
     licenseUrl.set('http://www.apache.org/licenses/LICENSE-2.0')
     projectUrl.set('https://github.com/exness/flink')
     scmConnection.set('scm:git:https://github.com/exness/flink')
+    
+    mavenCentralPortal {
+        username.set(System.getenv('MAVEN_CENTRAL_PORTAL_USERNAME'))
+        password.set(System.getenv('MAVEN_CENTRAL_PORTAL_PASSWORD'))
+    }
 }
 
 signing {
