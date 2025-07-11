@@ -1,5 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
-
 plugins {
     id 'java'
     id 'maven-publish'
@@ -54,7 +52,7 @@ allprojects {
 subprojects {
     apply plugin: "com.vanniktech.maven.publish"
     mavenPublishing {
-        publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+        publishToMavenCentral(com.vanniktech.maven.publish.SonatypeHost.CENTRAL_PORTAL)
         signAllPublications()
         pom {
             name = "Flink ${project.name.capitalize()}"
