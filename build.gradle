@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'maven-publish'
     id 'checkstyle'
-    id 'org.danilopianini.publish-on-central' version '9.0.7'
     id "com.vanniktech.maven.publish" version "0.33.0"
 }
 
@@ -88,8 +87,10 @@ mavenPublishing {
     }
 }
 
-signing {
-    def signingKey = project.findProperty('signingKey')
-    def signingPassword = project.findProperty('signingPassword')
-    useInMemoryPgpKeys(signingKey, signingPassword)
+afterEvaluate {
+    if (tasks.findByName("generateMetadataFileForMavenPublication") && tasks.findByName("plainJavadocJar")) {
+        tasks.named("generateMetadataFileForMavenPublication") {
+            dependsOn tasks.named("plainJavadocJar")
+        }
+    }
 }
