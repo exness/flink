@@ -31,7 +31,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Execute publish to Maven Central
-        run: ./gradlew --no-daemon -i publishAllPublicationsToProjectLocalRepository zipMavenCentralPortalPublication releaseMavenCentralPortalPublication -PsigningKey="${{ secrets.GPG_SIGNING_KEY }}" -PsigningPassword="${{ secrets.GPG_SIGNING_KEY_PASSWORD }}"
+        run: ./gradlew --no-daemon -i publishAllPublicationsToProjectLocalRepository zipMavenCentralPortalPublication releaseMavenCentralPortalPublication -PsigningKey="${{ secrets.GPG_SIGNING_KEY }}" -PsigningPassword="${{ secrets.GPG_SIGNING_KEY_PASSWORD }}" -PmavenCentralPortalUsername="${{ secrets.CENTRAL_PORTAL_USERNAME }}" -PmavenCentralPortalPassword="${{ secrets.CENTRAL_PORTAL_TOKEN }}"
         env:
           RELEASE_VERSION: ${{ github.ref_name }}
           MAVEN_CENTRAL_PORTAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
