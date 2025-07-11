@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id 'java-library'
-    id 'maven-publish'
     id "jacoco"
     id "org.sonarqube" version "4.0.0.2929"
 }
@@ -66,16 +65,4 @@ test {
             "--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED",
             "--add-opens=java.base/java.lang=ALL-UNNAMED")
     finalizedBy(jacocoTestReport)
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) { publication ->
-            groupId = group
-            artifactId = project.name
-            version = version
-
-            from components.java
-        }
-    }
 }

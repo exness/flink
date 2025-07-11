@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'maven-publish'
     id 'checkstyle'
-    id "com.vanniktech.maven.publish" version "0.33.0"
 }
 
 ext {
@@ -25,18 +24,14 @@ ext {
 allprojects {
     group = 'com.exness'
     version = System.getenv("RELEASE_VERSION") ?: "0.0.1-SNAPSHOT"
-        
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
-
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
     }
-
     java {
         withSourcesJar()
     }
-
     repositories {
         maven {
             url "https://packages.confluent.io/maven"
@@ -47,7 +42,6 @@ allprojects {
         }
         mavenCentral()
     }
-
     checkstyle {
         configFile = rootProject.file('checkstyle/checkstyle.xml')
         toolVersion = '9.1'
@@ -55,34 +49,36 @@ allprojects {
     }
 }
 
-import com.vanniktech.maven.publish.SonatypeHost
-
-mavenPublishing {
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-    signAllPublications()
-    pom {
-        name = "Flink Extensions"
-        description = "Custom Flink formats and utilities"
-        inceptionYear = "2024"
-        url = "https://github.com/exness/flink"
-        licenses {
-            license {
-                name = "The Apache License, Version 2.0"
-                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
-                distribution = "repo"
-            }
-        }
-        developers {
-            developer {
-                id = "exness"
-                name = "exness"
-                url = "https://github.com/exness/flink"
-            }
-        }
-        scm {
+subprojects {
+    apply plugin: "com.vanniktech.maven.publish"
+    import com.vanniktech.maven.publish.SonatypeHost
+    mavenPublishing {
+        publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+        signAllPublications()
+        pom {
+            name = "Flink ${project.name.capitalize()}"
+            description = "Module ${project.name} for Flink extensions"
+            inceptionYear = "2024"
             url = "https://github.com/exness/flink"
-            connection = "scm:git:git://github.com/exness/flink.git"
-            developerConnection = "scm:git:ssh://git@github.com/exness/flink.git"
+            licenses {
+                license {
+                    name = "The Apache License, Version 2.0"
+                    url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    distribution = "repo"
+                }
+            }
+            developers {
+                developer {
+                    id = "exness"
+                    name = "exness"
+                    url = "https://github.com/exness/flink"
+                }
+            }
+            scm {
+                url = "https://github.com/exness/flink"
+                connection = "scm:git:git://github.com/exness/flink.git"
+                developerConnection = "scm:git:ssh://git@github.com/exness/flink.git"
+            }
         }
     }
 }
