@@ -12,29 +12,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      - uses: DanySK/build-check-deploy-gradle-action@4.0.1
         with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Set up GPG
-        uses: crazy-max/ghaction-import-gpg@v6
-        with:
-          gpg_private_key: ${{ secrets.GPG_SIGNING_KEY }}
-          passphrase: ${{ secrets.GPG_SIGNING_KEY_PASSWORD }}
-
-      - name: Release with gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Execute publish to Maven Central
-        run: ./gradlew --no-daemon -i publishAllPublicationsToProjectLocalRepository zipMavenCentralPortalPublication releaseMavenCentralPortalPublication -PsigningKey="${{ secrets.GPG_SIGNING_KEY }}" -PsigningPassword="${{ secrets.GPG_SIGNING_KEY_PASSWORD }}" -PmavenCentralPortalUsername="${{ secrets.CENTRAL_PORTAL_USERNAME }}" -PmavenCentralPortalPassword="${{ secrets.CENTRAL_PORTAL_TOKEN }}"
-        env:
-          RELEASE_VERSION: ${{ github.ref_name }}
-          MAVEN_CENTRAL_PORTAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
-          MAVEN_CENTRAL_PORTAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_TOKEN }}
-          MAVEN_CENTRAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
-          MAVEN_CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_TOKEN }}
+          deploy-command: >-
+            ./gradlew 
+            publishAllPublicationsToProjectLocalRepository 
+            zipMavenCentralPortalPublication 
+            releaseMavenCentralPortalPublication
+          should-deploy: true
+          maven-central-username: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
+          maven-central-password: ${{ secrets.CENTRAL_PORTAL_TOKEN }}
+          signing-key: ${{ secrets.GPG_SIGNING_KEY }}
+          signing-password: ${{ secrets.GPG_SIGNING_KEY_PASSWORD }}
