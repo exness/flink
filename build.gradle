@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'checkstyle'
     id 'org.danilopianini.publish-on-central' version '9.0.7'
+    id "com.vanniktech.maven.publish" version "0.33.0"
 }
 
 ext {
@@ -55,28 +56,34 @@ allprojects {
     }
 }
 
-publishOnCentral {
-    repoOwner.set('exness')
-    projectDescription.set('Various tools and improvements for Flink')
-    projectLongName.set('Flink Tools')
-    licenseName.set('Apache License, Version 2.0')
-    licenseUrl.set('http://www.apache.org/licenses/LICENSE-2.0')
-    projectUrl.set('https://github.com/exness/flink')
-    scmConnection.set('scm:git:https://github.com/exness/flink')
-    
-    publishing {
-        publications {
-            withType(MavenPublication) {
-                pom {
-                    developers {
-                        developer {
-                            name.set('Exness')
-                            email.set('support@exness.com')
-                            url.set('https://exness.com')
-                        }
-                    }
-                }
+import com.vanniktech.maven.publish.SonatypeHost
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+    pom {
+        name = "Flink Extensions"
+        description = "Custom Flink formats and utilities"
+        inceptionYear = "2024"
+        url = "https://github.com/exness/flink"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "repo"
             }
+        }
+        developers {
+            developer {
+                id = "exness"
+                name = "exness"
+                url = "https://github.com/exness/flink"
+            }
+        }
+        scm {
+            url = "https://github.com/exness/flink"
+            connection = "scm:git:git://github.com/exness/flink.git"
+            developerConnection = "scm:git:ssh://git@github.com/exness/flink.git"
         }
     }
 }
