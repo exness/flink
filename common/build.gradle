@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+version System.getenv("RELEASE_VERSION") ?: "0.0.1-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation "org.projectlombok:lombok:${lombokVersion}"
+
+    implementation "org.apache.flink:flink-table-common:${flinkVersion}"
+    implementation "org.apache.flink:flink-connector-kafka:${flinkKafkaVersion}"
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}

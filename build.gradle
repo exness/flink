@@ -1,0 +1,101 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.vanniktech:gradle-maven-publish-plugin:0.33.0"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'checkstyle'
+}
+
+ext {
+    javaVersion = '17'
+    flinkVersion = '1.20.0'
+    flinkKafkaVersion = '3.3.0-1.20'
+    scalaBinaryVersion = '2.12'
+    slf4jVersion = '2.0.3'
+    log4jVersion = '2.17.1'
+    lombokVersion = '1.18.34'
+    assertjVersion = '3.23.1'
+    junitJupiterVersion = '5.10.1'
+    postgresJdbcVersion = '42.7.2'
+    verticaJdbcVersion = '12.0.4-0'
+    clickhouseJdbcVersion = '0.6.5'
+    calciteVersion = '1.37.0'
+    apicurioVersion = '2.5.8.Final'
+}
+
+allprojects {
+    group = 'com.exness'
+    version = System.getenv("RELEASE_VERSION") ?: "0.0.1-SNAPSHOT"
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+    java {
+        withSourcesJar()
+    }
+    repositories {
+        maven {
+            url "https://packages.confluent.io/maven"
+            allowInsecureProtocol true
+        }
+        maven {
+            url 'https://jitpack.io'
+        }
+        mavenCentral()
+    }
+    checkstyle {
+        configFile = rootProject.file('checkstyle/checkstyle.xml')
+        toolVersion = '9.1'
+        ignoreFailures = false
+    }
+}
+
+subprojects {
+    apply plugin: "com.vanniktech.maven.publish"
+    mavenPublishing {
+        publishToMavenCentral(com.vanniktech.maven.publish.SonatypeHost.CENTRAL_PORTAL)
+        signAllPublications()
+        pom {
+            name = "Flink ${project.name.capitalize()}"
+            description = "Module ${project.name} for Flink extensions"
+            inceptionYear = "2024"
+            url = "https://github.com/exness/flink"
+            licenses {
+                license {
+                    name = "The Apache License, Version 2.0"
+                    url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    distribution = "repo"
+                }
+            }
+            developers {
+                developer {
+                    id = "exness"
+                    name = "exness"
+                    url = "https://github.com/exness/flink"
+                }
+            }
+            scm {
+                url = "https://github.com/exness/flink"
+                connection = "scm:git:git://github.com/exness/flink.git"
+                developerConnection = "scm:git:ssh://git@github.com/exness/flink.git"
+            }
+        }
+    }
+}
+
+afterEvaluate {
+    if (tasks.findByName("generateMetadataFileForMavenPublication") && tasks.findByName("plainJavadocJar")) {
+        tasks.named("generateMetadataFileForMavenPublication") {
+            dependsOn tasks.named("plainJavadocJar")
+        }
+    }
+}

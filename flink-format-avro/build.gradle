@@ -1,0 +1,68 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id "jacoco"
+    id "org.sonarqube" version "4.0.0.2929"
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "flink-format-avro"
+        property "sonar.qualitygate.wait", true
+        property "sonar.language", "java"
+        property "sonar.sources", "src/main/java"
+        property "sonar.tests", "src/test/java"
+        property 'sonar.core.codeCoveragePlugin', 'jacoco'
+        property 'sonar.coverage.jacoco.xmlReportPaths', "${buildDir}/reports/jacoco/jacocoTestReport.xml"
+    }
+}
+
+jacocoTestReport{
+    reports {
+        xml.required = true
+        xml.outputLocation = layout.buildDirectory.file('reports/jacoco/jacocoTestReport.xml')
+        html.required = false
+    }
+}
+
+ext {
+}
+
+version System.getenv("RELEASE_VERSION") ?: "0.0.1-SNAPSHOT"
+
+dependencies {
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation "org.projectlombok:lombok:${lombokVersion}"
+    //implementation project(":flink-connector-kafka")
+
+    api 'joda-time:joda-time:2.13.1'
+    api "org.apache.flink:flink-connector-files:${flinkVersion}"
+    api "org.apache.flink:flink-avro:${flinkVersion}"
+    api "io.apicurio:apicurio-registry-serdes-avro-serde:${apicurioVersion}"
+
+    implementation project(":common")
+
+    compileOnly "org.apache.flink:flink-table-runtime:${flinkVersion}"
+    compileOnly "org.apache.flink:flink-core:${flinkVersion}"
+
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    testImplementation "org.apache.flink:flink-test-utils:${flinkVersion}"
+    testImplementation "org.apache.flink:flink-core:${flinkVersion}"
+    testImplementation "org.apache.flink:flink-table-runtime:${flinkVersion}"
+    testImplementation "org.apache.flink:flink-table-common:${flinkVersion}:tests"
+    testImplementation 'org.testcontainers:junit-jupiter:1.17.5'
+    testImplementation "org.apache.flink:flink-connector-kafka:${flinkKafkaVersion}"
+    testImplementation "org.apache.flink:flink-table-planner_${scalaBinaryVersion}:${flinkVersion}"
+}
+
+test {
+    useJUnitPlatform()
+    jvmArgs("--add-opens=java.base/java.util=ALL-UNNAMED",
+            "--add-exports=java.base/java.util=ALL-UNNAMED",
+            "--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED",
+            "--add-opens=java.base/java.lang=ALL-UNNAMED")
+    finalizedBy(jacocoTestReport)
+}

@@ -1,0 +1,5 @@
+rootProject.name = 'flink'
+include 'flink-format-json'
+include 'flink-format-avro'
+include 'common'
+
